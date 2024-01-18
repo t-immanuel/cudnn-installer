@@ -10,7 +10,7 @@ def main():
 def split_file(filename, target_folder, split_byte_size=20*1024*1024):
     file_size = os.path.getsize(filename)
     number_of_splits = ceildiv(file_size, split_byte_size)
-    os.makedirs(os.path.basename(target_folder), exist_ok=True)
+    os.makedirs(target_folder, exist_ok=True)
 
     hashes = []
 
