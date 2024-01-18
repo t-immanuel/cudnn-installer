@@ -1,4 +1,8 @@
+#!/usr/bin/python3
+
 import asyncio
+import contextvars
+import functools
 import json
 import os
 import urllib.parse
@@ -10,7 +14,7 @@ import requests
 
 
 async def main():
-    base_url = "https://raw.githubusercontent.com/t-immanuel/cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_arm64/main/cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_arm64/"
+    base_url = "https://raw.githubusercontent.com/t-immanuel/cudnn-installer/main/cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_amd64/"
     base_dir = "temp"
     concurrent_download_semaphore = asyncio.Semaphore(5)  # 5 concurrent-downloads
 
@@ -62,11 +66,18 @@ async def download_split(url, file_name, expected_md5_hash, sempahore):
 
 
 async def download_content_async(url):
-    return await asyncio.to_thread(download_content, url)
+    return await to_thread(download_content, url)
 
 
 def download_content(url):
     return urllib.request.urlopen(url).read()
+
+
+async def to_thread(func, /, *args, **kwargs):  # substitute for asyncio.to_thread, for older python versions
+    loop = asyncio.get_running_loop()
+    ctx = contextvars.copy_context()
+    func_call = functools.partial(ctx.run, func, *args, **kwargs)
+    return await loop.run_in_executor(None, func_call)
 
 
 if __name__ == "__main__":

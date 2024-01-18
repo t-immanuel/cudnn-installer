@@ -4,10 +4,11 @@ import os.path
 
 
 def main():
-    split_file( 'C:\\Users\\ACER\\Downloads\\cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_arm64.deb', "cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_arm64")
+    split_file('C:\\Users\\ACER\\Downloads\\cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_amd64.deb',
+               "cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_amd64")
 
 
-def split_file(filename, target_folder, split_byte_size=20*1024*1024):
+def split_file(filename, target_folder, split_byte_size=10*1024*1024):
     file_size = os.path.getsize(filename)
     number_of_splits = ceildiv(file_size, split_byte_size)
     os.makedirs(target_folder, exist_ok=True)
