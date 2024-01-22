@@ -7,7 +7,7 @@ from hashlib import md5
 
 
 def main():
-    combine("cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_amd64", "cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_amd64.deb")
+    combine("temp", "cudnn-local-repo-ubuntu2004-8.9.7.29_1.0-1_amd64.deb")
 
 
 def combine(target_folder, new_file_name):
